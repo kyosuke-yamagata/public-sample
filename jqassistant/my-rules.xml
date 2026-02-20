@@ -1,0 +1,46 @@
+<jqassistant-rules xmlns="http://schema.jqassistant.org/rule/v2.9"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://schema.jqassistant.org/rule/v2.9 https://jqassistant.github.io/jqassistant/current/schema/jqassistant-rule-v2.9.xsd">
+
+    <group id="default">
+        <includeConstraint refId="my-rules:MyConstraint"/>
+    </group>
+
+    <!-- @see https://github.com/jqassistant-plugin/jqassistant-plantuml-report-plugin?tab=readme-ov-file#using-the-jqassistant-plantuml-report-plugin -->
+    <concept id="my-rules:DependencyDiagram">
+        <description>Creates a diagram about dependencies between packages containing Java types (per artifact, test artifacts are excluded -> 構文エラー出たので外した).</description>
+        <cypher><![CDATA[
+        MATCH
+          (artifact:Main:Artifact)-[:CONTAINS]->(package:Package)-[:CONTAINS]->(:Type)
+        OPTIONAL MATCH
+          (package)-[dependsOn:DEPENDS_ON]->(:Package)
+        RETURN
+          {
+            role : "graph",
+            nodes : collect(package),
+            relationships: collect(dependsOn)
+          }
+        ]]></cypher>
+        <report type="plantuml-component-diagram">
+            <property name="key">value</property>
+       </report>
+    </concept>
+    <concept id="my-rules:ClassDiagram">
+        <description>Creates a class diagram.</description>
+        <cypher><![CDATA[
+        MATCH
+          (p:Package)-[:CONTAINS]->(t:Type)-[:DECLARES]->(m:Member)
+        WHERE NOT
+          t:Inner
+        OPTIONAL MATCH
+          (t)-[e:EXTENDS|IMPLEMENTS]->(:Type)
+        OPTIONAL MATCH
+          (t)-[d:DEPENDS_ON]->(:Type)
+        RETURN
+          *
+        ]]></cypher>
+        <report type="plantuml-class-diagram">
+            <property name="key">value</property>
+       </report>
+    </concept>
+</jqassistant-rules>
