@@ -1,6 +1,19 @@
 jQAssistantのCLIシェル実行時の設定メモ
 
+## JVMレイヤ
+
 ```shell
 export JQASSISTANT_OPTS="-Xms4g -Xmx4g -XX:MaxMetaspaceSize=512m -XX:ReservedCodeCacheSize=256m -XX:+PrintFlagsFinal"
 /opt/jqa/bin/jqassistant.sh scan
+```
+
+## Neo4jレイヤ
+
+<https://neo4j.com/docs/operations-manual/current/configuration/configuration-settings/#config_db.memory.transaction.total.max>
+
+```shell
+export DBMS_MEMORY_HEAP_INITIAL_SIZE=4g
+export DBMS_MEMORY_HEAP_MAX_SIZE=4g
+export DBMS_MEMORY_PAGECACHE_SIZE=4g
+export DBMS_MEMORY_TRANSACTION.TOTAL.MAX=3g
 ```
