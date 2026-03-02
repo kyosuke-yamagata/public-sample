@@ -1,0 +1,4 @@
+jQAssistantのCLIシェル実行時の設定メモ
+
+export JQASSISTANT_OPTS="-Xms4g -Xmx4g -XX:MaxMetaspaceSize=512m -XX:ReservedCodeCacheSize=256m -XX:+PrintFlagsFinal"
+/opt/jqa/bin/jqassistant.sh scan
