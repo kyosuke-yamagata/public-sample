@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!-- from https://spotbugs.readthedocs.io/ja/latest/bugDescriptions.html -->
+<!-- usage: run jar with this xml config file
+sample command is ...
+java -cp "$CP" -XX:MaxRAMPercentage=80 -Dlog4j2.formatMsgNoLookups=true -jar /spotbugs/dist/lib/spotbugs.jar -pluginList /fsb/lib/findsecbugs-plugin.jar -exclude /spotbugs/exclude-filter.xml -include /spotbugs/include-filter.xml -onlyAnalyze com.example.demo.*,demo.* -low -noClassOk -xml:withMessages=/opt/SpotBugsReport.xml -auxclasspathFromFile /tmp/jars.list /home/gitlab/target/demo-0.0.1-SNAPSHOT.jar
+-->
+<FindBugsFilter>
+    <Match><Bug category="BAD_PRACTICE,CORRECTNESS,EXPERIMENTAL,I18N,MALICIOUS_CODE,MT_CORRECTNESS,NOISE,PERFORMANCE,SECURITY,STYLE" /></Match>
+</FindBugsFilter>
